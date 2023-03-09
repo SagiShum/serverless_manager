@@ -5,9 +5,10 @@ from services import sleep_and_sum
 from src.serverless_manager.function_process.function_process_manager import FunctionProcessManager
 
 app = Flask(__name__)
+process_manager = FunctionProcessManager()
+
 services = [sleep_and_sum]
 services_map = {func.__name__: func for func in services}
-process_manager = FunctionProcessManager(services)
 request_count = 0
 
 

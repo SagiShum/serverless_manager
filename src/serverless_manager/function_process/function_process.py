@@ -25,7 +25,7 @@ class FunctionProcessCommunicator:
         initializes child process
         :param func: function to be run by child process
         """
-        self.last_called = None
+        self.last_called = time.time()
         self.is_busy = False
         self.func = func
         self._init_child_process()
