@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, abort
 from flask_apscheduler import APScheduler
 from services import sleep_and_sum
 
@@ -13,7 +13,9 @@ request_count = 0
 
 @app.route('/<string:service_name>', methods=['GET'])
 def run_serverless_service(service_name: str):
-    service = services_map[service_name]
+    service = services_map.get(service_name)
+    if service is None:
+        abort(404)
     answer = process_manager.run_function_on_endpoint(service, request.args)
     global request_count
     request_count += 1
