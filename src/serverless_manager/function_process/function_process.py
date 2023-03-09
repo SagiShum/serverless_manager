@@ -37,12 +37,12 @@ class FunctionProcessCommunicator:
     def _init_child_process(self) -> None:
         self.parent_conn, child_conn = mp.Pipe()
         self.process = mp.Process(target=service_function, args=[self.func, child_conn])
+        self.process.start()
 
     def terminate(self) -> None:
         self.process.terminate()
 
-    def _run_process(self, kwargs: Dict[str, Any]) -> Any:
-        self.process.start()
+    def _run_endpoint_function(self, kwargs: Dict[str, Any]) -> Any:
         self.parent_conn.send(kwargs)
         return self.parent_conn.recv()
 
@@ -54,6 +54,6 @@ class FunctionProcessCommunicator:
         """
         self.is_busy = True
         self.last_called = time.time()
-        res = self._run_process(kwargs)
+        res = self._run_endpoint_function(kwargs)
         self.is_busy = False
         return res

@@ -5,6 +5,10 @@ from src.serverless_manager.function_process.function_process import FunctionPro
 
 
 class FunctionProcessManager:
+    """
+    Manager of function process communicators.
+    Responsible for cleanup
+    """
     def __init__(self, endpoint_services: List[Callable], max_idle_time: int = 6):
         self.services = endpoint_services
         self.max_idle_time = max_idle_time
