@@ -14,7 +14,7 @@ request_count = 0
 @app.route('/<string:service_name>', methods=['GET'])
 def run_serverless_service(service_name: str):
     service = services_map[service_name]
-    answer = process_manager.run_service(service, request.args)
+    answer = process_manager.run_function_on_endpoint(service, request.args)
     global request_count
     request_count += 1
     return answer
